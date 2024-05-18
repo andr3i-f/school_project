@@ -32,15 +32,13 @@ class ReCourse extends StatelessWidget {
 
 class AppState extends ChangeNotifier {}
 
-// ...
-
 class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
+  var selectedIndex = 0; //Placeholder from the flutter guide
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = LandingPage();
         break;
-      case 1:
+      case 1: //Nothing actually changes this value right now
         page = FavoritesPage();
         break;
       default:
@@ -83,6 +81,7 @@ class LandingPage extends StatelessWidget {
           body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          //Header/ logo formatting
           Column(children: [
             SizedBox(height: 128),
             Image.asset('assets/images/logo.png', height: 128),
@@ -93,6 +92,7 @@ class LandingPage extends StatelessWidget {
             SizedBox(
               height: 64,
             ),
+            //User-type buttons
             Row(
               children: [
                 GridButton(
@@ -113,6 +113,7 @@ class LandingPage extends StatelessWidget {
   }
 }
 
+//Pass in an image path and a label to this to make a button
 class GridButton extends StatelessWidget {
   const GridButton({
     super.key,
@@ -162,6 +163,7 @@ class GridButton extends StatelessWidget {
   }
 }
 
+// Placeholder additional page
 class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
