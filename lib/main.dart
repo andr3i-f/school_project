@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ReCourse());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ReCourse extends StatelessWidget {
+  const ReCourse({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+      create: (context) => AppState(),
       child: MaterialApp(
         title: 'Namer App',
         theme: ThemeData(
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppState extends ChangeNotifier {
+class AppState extends ChangeNotifier {
   var current = WordPair.random();
 
   void getNext() {
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = GeneratorPage();
+        page = LandingPage();
         break;
       case 1:
         page = FavoritesPage();
@@ -113,10 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class GeneratorPage extends StatelessWidget {
+class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+    var appState = context.watch<AppState>();
     var pair = appState.current;
 
     IconData icon;
@@ -162,7 +162,7 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    var appState = context.watch<MyAppState>();
+    var appState = context.watch<AppState>();
     var favorites = appState.favorites;
 
     return Center(
@@ -191,7 +191,7 @@ class FavoriteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+    var appState = context.watch<AppState>();
     final style = theme.textTheme.displaySmall!.copyWith(
       color: theme.colorScheme.primary,
     );
