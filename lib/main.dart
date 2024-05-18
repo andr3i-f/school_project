@@ -4,6 +4,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recourse/pages/student_sign_in_page.dart';
 
 import 'pages/pages.dart';
 import 'widgets/widgets.dart';
@@ -35,7 +36,7 @@ class ReCourse extends StatelessWidget {
 class AppState extends ChangeNotifier {
   String pageId = 'Landing';
 
-  void changePage(String id){
+  void changePage(String id) {
     pageId = id;
     notifyListeners();
   }
@@ -57,8 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
       case 'Landing':
         page = LandingPage();
         break;
-      case 'AdminMenu': //Nothing actually changes this value right now
+      case 'AdminMenu':
         page = AdminMenuPage();
+        break;
+      case 'AdminSignIn':
+        page = AdminSignInPage();
+        break;
+      case 'StudentMenu':
+        page = StudentMenuPage();
+        break;
+      case 'StudentSignIn':
+        page = StudentSignInPage();
         break;
       default:
         throw UnimplementedError('no widget for $currentPageId');

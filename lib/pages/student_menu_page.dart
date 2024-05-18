@@ -4,7 +4,7 @@ import 'package:recourse/main.dart';
 
 import '../widgets/widgets.dart';
 
-class AdminMenuPage extends StatelessWidget {
+class StudentMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
@@ -25,19 +25,19 @@ class AdminMenuPage extends StatelessWidget {
             Row( //Top row
               children: [
                 GridButton(
-                  path: 'assets/images/adminIcon.png',
+                  path: 'assets/images/studentIcon.png',
                   label: 'Return home',
                   fn: () => {appState.changePage('Landing')},
                 ),
                 SizedBox(width: 10),
                 GridButton(
-                  path: 'assets/images/adminIcon.png',
+                  path: 'assets/images/studentIcon.png',
                   label: 'Placeholder2',
                   fn: () => {print('Placeholder pressed')},
                 ),
                 SizedBox(width: 10),
                 GridButton(
-                  path: 'assets/images/adminIcon.png',
+                  path: 'assets/images/studentIcon.png',
                   label: 'Placeholder3',
                   fn: () => {print('Placeholder pressed')},
                 ),
@@ -47,19 +47,19 @@ class AdminMenuPage extends StatelessWidget {
             Row( // Bottom row
               children: [
                 GridButton(
-                  path: 'assets/images/adminIcon.png',
+                  path: 'assets/images/studentIcon.png',
                   label: 'Placeholder1',
                   fn: () => {print('Placeholder pressed')},
                 ),
                 SizedBox(width: 10),
                 GridButton(
-                  path: 'assets/images/adminIcon.png',
+                  path: 'assets/images/studentIcon.png',
                   label: 'Placeholder2',
                   fn: () => {print('Placeholder pressed')},
                 ),
                 SizedBox(width: 10),
                 GridButton(
-                  path: 'assets/images/adminIcon.png',
+                  path: 'assets/images/studentIcon.png',
                   label: 'Placeholder3',
                   fn: () => {print('Placeholder pressed')},
                 ),

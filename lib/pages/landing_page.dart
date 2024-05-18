@@ -31,13 +31,13 @@ class LandingPage extends StatelessWidget {
                 GridButton(
                     path: 'assets/images/studentIcon.png', 
                     label: 'Student',
-                    fn: () => {appState.changePage('StudentMenu')},
+                    fn: () => {appState.changePage('StudentSignIn')},
                     ),
                 SizedBox(width: 10),
                 GridButton(
                     path: 'assets/images/adminIcon.png',
                     label: 'Administrator',
-                    fn: () => {appState.changePage('AdminMenu')},
+                    fn: () => {appState.changePage('AdminSignIn')},
                     ),
               ],
             )
