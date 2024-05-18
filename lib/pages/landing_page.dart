@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recourse/main.dart';
 
-import '../widgets/grid_button.dart';
+import '../widgets/widgets.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -31,13 +31,13 @@ class LandingPage extends StatelessWidget {
                 GridButton(
                     path: 'assets/images/studentIcon.png', 
                     label: 'Student',
-                    fn: () => {print('Hello')},
+                    fn: () => {appState.changePage('StudentMenu')},
                     ),
                 SizedBox(width: 10),
                 GridButton(
                     path: 'assets/images/adminIcon.png',
                     label: 'Administrator',
-                    fn: () => {appState.changeIndex(1)},
+                    fn: () => {appState.changePage('AdminMenu')},
                     ),
               ],
             )

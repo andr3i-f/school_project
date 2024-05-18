@@ -33,10 +33,10 @@ class ReCourse extends StatelessWidget {
 }
 
 class AppState extends ChangeNotifier {
-  var pageIndex = 0;
+  String pageId = 'Landing';
 
-  void changeIndex(int index){
-    pageIndex = index;
+  void changePage(String id){
+    pageId = id;
     notifyListeners();
   }
 }
@@ -50,18 +50,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-    var selectedIndex = appState.pageIndex;
+    var currentPageId = appState.pageId;
 
     Widget page;
-    switch (selectedIndex) {
-      case 0:
+    switch (currentPageId) {
+      case 'Landing':
         page = LandingPage();
         break;
-      case 1: //Nothing actually changes this value right now
+      case 'AdminMenu': //Nothing actually changes this value right now
         page = AdminMenuPage();
         break;
       default:
-        throw UnimplementedError('no widget for $selectedIndex');
+        throw UnimplementedError('no widget for $currentPageId');
     }
 
     return LayoutBuilder(builder: (context, constraints) {
