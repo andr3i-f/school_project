@@ -1,6 +1,10 @@
+import 'dart:ui_web';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 void main() {
   runApp(ReCourse());
@@ -14,11 +18,11 @@ class ReCourse extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: MaterialApp(
-        title: 'Namer App',
+        title: 'reCourse',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 240, 41, 41)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Color.fromARGB(255, 210, 210, 210)),
         ),
         home: MyHomePage(),
       ),
@@ -26,30 +30,7 @@ class ReCourse extends StatelessWidget {
   }
 }
 
-class AppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>{};
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
-
-  void removeFavorite(WordPair pair) {
-    favorites.remove(pair);
-    notifyListeners();
-  }
-}
+class AppState extends ChangeNotifier {}
 
 // ...
 
@@ -79,27 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
       return Scaffold(
         body: Row(
           children: [
-            SafeArea(
-              child: NavigationRail(
-                extended: constraints.maxWidth >= 600,
-                destinations: [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                },
-              ),
-            ),
             Expanded(
               child: Container(
                 color: Theme.of(context).colorScheme.primaryContainer,
@@ -117,41 +77,86 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-    var pair = appState.current;
 
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
-      child: Column(
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+          body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
+          Column(children: [
+            SizedBox(height: 128),
+            Image.asset('assets/images/logo.png', height: 128),
+            SizedBox(
+              height: 10,
+            ),
+            Text('Scheduling and registration made easy.'),
+            SizedBox(
+              height: 64,
+            ),
+            Row(
+              children: [
+                GridButton(
+                    path: 'assets/images/studentIcon.png', 
+                    label: 'Student'
+                    ),
+                SizedBox(width: 10),
+                GridButton(
+                    path: 'assets/images/adminIcon.png',
+                    label: 'Administrator'
+                    ),
+              ],
+            )
+          ]),
+        ],
+      ));
+    });
+  }
+}
+
+class GridButton extends StatelessWidget {
+  const GridButton({
+    super.key,
+    required this.path,
+    required this.label,
+  });
+
+  final String path;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final buttonStyle = ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+            Color.fromARGB(255, 226, 226, 226)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        )));
+    final textStyle = GoogleFonts.lato().copyWith(
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      color: Color.fromARGB(255, 0, 0, 0),
+    );
+
+    return Container(
+      height: 256,
+      width: 256,
+      child: ElevatedButton(
+        onPressed: () {
+          print('Button');
+        },
+        style: buttonStyle,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
+              Image.asset(path),
+              Text(label, style: textStyle),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -163,86 +168,9 @@ class FavoritesPage extends StatelessWidget {
     final theme = Theme.of(context);
 
     var appState = context.watch<AppState>();
-    var favorites = appState.favorites;
 
     return Center(
-      child: ListView(
-        children: [
-          for (var favorite in favorites)
-            FavoriteCard(theme: theme, favorite: favorite),
-          SizedBox(
-            height: 5,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FavoriteCard extends StatelessWidget {
-  const FavoriteCard({
-    super.key,
-    required this.theme,
-    required this.favorite,
-  });
-
-  final ThemeData theme;
-  final WordPair favorite;
-
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<AppState>();
-    final style = theme.textTheme.displaySmall!.copyWith(
-      color: theme.colorScheme.primary,
-    );
-    return Card(
-      color: theme.colorScheme.onSecondary,
-      elevation: 5.0,
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: ListTile(
-          leading: IconButton(
-            onPressed: () {
-              appState.removeFavorite(favorite);
-            },
-            icon: Icon(Icons.delete),
-            color: style.color,
-          ),
-          title: Text(favorite.asLowerCase, style: style),
-        ),
-      ),
-    );
-  }
-}
-
-// ...
-
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-
-    return Card(
-      color: theme.colorScheme.primary,
-      elevation: 5.0,
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Text(
-          pair.asLowerCase,
-          style: style,
-          semanticsLabel: "${pair.first} ${pair.second}",
-        ),
-      ),
+      child: Text('Placeholder'),
     );
   }
 }
