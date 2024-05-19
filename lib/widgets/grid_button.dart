@@ -17,9 +17,9 @@ class GridButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final buttonStyle = ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-            Color.fromARGB(255, 226, 226, 226)),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        backgroundColor:
+            WidgetStateProperty.all<Color>(Color.fromARGB(255, 226, 226, 226)),
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         )));
