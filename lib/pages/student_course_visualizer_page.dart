@@ -25,7 +25,11 @@ class StudentCourseVisualizerPage extends StatelessWidget {
                 child: Text('Back'))
           ]),
           Expanded(
-            child: CourseVisualizer(appState: appState, textStyle: textStyle),
+            child: CourseVisualizer(
+              appState: appState,
+              textStyle: textStyle,
+              courses: ["Monday", "Monday", "Thursday", "Friday"], // testing
+            ),
           ),
         ],
       )));

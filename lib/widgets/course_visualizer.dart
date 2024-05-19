@@ -5,11 +5,12 @@ class CourseVisualizer extends StatelessWidget {
   const CourseVisualizer({
     required this.appState,
     required this.textStyle,
-    // Pass in a list to CourseSections
+    required this.courses,
   });
 
   final AppState appState;
   final TextStyle textStyle;
+  final List<String> courses;
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +21,31 @@ class CourseVisualizer extends StatelessWidget {
         children: [
           ScheduleColumn(
             name: 'Time',
+            courses: courses,
           ),
           ScheduleColumn(
             name: 'Monday',
+            courses: courses,
           ),
           ScheduleColumn(
             name: 'Tuesday',
+            courses: courses,
           ),
           ScheduleColumn(
             name: 'Wednesday',
+            courses: courses,
           ),
           ScheduleColumn(
             name: 'Thursday',
+            courses: courses,
           ),
           ScheduleColumn(
             name: 'Friday',
+            courses: courses,
           ),
           ScheduleColumn(
             name: 'Saturday',
+            courses: courses,
           ),
         ],
       )));
@@ -49,14 +57,20 @@ class ScheduleColumn extends StatelessWidget {
   const ScheduleColumn({
     super.key,
     required this.name,
+    required this.courses,
   });
 
   final String name;
+  final List<String> courses;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [Row(), Row(), Row(), Row(), Text(name)],
+      children: [
+        for (var course in courses)
+          if (course == name) Text(course),
+        Text(name),
+      ],
     );
   }
 }
