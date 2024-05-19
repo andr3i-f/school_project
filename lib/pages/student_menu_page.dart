@@ -22,7 +22,8 @@ class StudentMenuPage extends StatelessWidget {
               height: 64,
             ),
             //User-type buttons
-            Row( //Top row
+            Row(
+              //Top row
               children: [
                 GridButton(
                   path: 'assets/images/studentIcon.png',
@@ -33,7 +34,7 @@ class StudentMenuPage extends StatelessWidget {
                 GridButton(
                   path: 'assets/images/studentIcon.png',
                   label: 'Placeholder2',
-                  fn: () => {print('Placeholder pressed')},
+                  fn: () => {appState.changePage('StudentCourseVisualizer')},
                 ),
                 SizedBox(width: 10),
                 GridButton(
@@ -44,7 +45,8 @@ class StudentMenuPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            Row( // Bottom row
+            Row(
+              // Bottom row
               children: [
                 GridButton(
                   path: 'assets/images/studentIcon.png',
