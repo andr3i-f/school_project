@@ -18,27 +18,45 @@ class CourseVisualizer extends StatelessWidget {
           body: (Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Column(
-            children: [Row(), Row(), Row(), Row(), Text('Time')],
+          ScheduleColumn(
+            name: 'Time',
           ),
-          Column(children: [Row(), Row(), Row(), Row(), Text('Monday')]),
-          Column(
-            children: [Row(), Row(), Row(), Row(), Text('Tuesday')],
+          ScheduleColumn(
+            name: 'Monday',
           ),
-          Column(
-            children: [Row(), Row(), Row(), Row(), Text('Wednesday')],
+          ScheduleColumn(
+            name: 'Tuesday',
           ),
-          Column(
-            children: [Row(), Row(), Row(), Row(), Text('Thursday')],
+          ScheduleColumn(
+            name: 'Wednesday',
           ),
-          Column(
-            children: [Row(), Row(), Row(), Row(), Text('Friday')],
+          ScheduleColumn(
+            name: 'Thursday',
           ),
-          Column(
-            children: [Row(), Row(), Row(), Row(), Text('Saturday')],
+          ScheduleColumn(
+            name: 'Friday',
+          ),
+          ScheduleColumn(
+            name: 'Saturday',
           ),
         ],
       )));
     });
+  }
+}
+
+class ScheduleColumn extends StatelessWidget {
+  const ScheduleColumn({
+    super.key,
+    required this.name,
+  });
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [Row(), Row(), Row(), Row(), Text(name)],
+    );
   }
 }
