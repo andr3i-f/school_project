@@ -31,11 +31,20 @@ class LoginBox extends StatelessWidget {
                   width: 200,
                   child: Column(
                     children: [
-                      TextField(),
+                      TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Username',
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
                       TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                        ),
                         obscureText: true,
                       ),
                       SizedBox(height: 10),
