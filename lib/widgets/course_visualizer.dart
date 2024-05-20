@@ -190,7 +190,12 @@ class TimeColumn extends StatelessWidget {
           ]),
         ),
         Spacer(),
-        Text(name),
+        Row(
+          children: [
+            Text(name),
+            SizedBox(width: width),
+          ],
+        )
       ],
     );
   }
