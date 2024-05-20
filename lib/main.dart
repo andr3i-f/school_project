@@ -4,6 +4,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recourse/pages/student_course_visualizer_page.dart';
 import 'package:recourse/pages/student_sign_in_page.dart';
 
 import 'pages/pages.dart';
@@ -69,6 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 'StudentSignIn':
         page = StudentSignInPage();
+        break;
+      case 'StudentCourseVisualizer':
+        page = StudentCourseVisualizerPage();
         break;
       default:
         throw UnimplementedError('no widget for $currentPageId');
