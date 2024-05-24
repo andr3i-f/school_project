@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recourse/main.dart';
+import 'package:recourse/course_classes.dart';
 
 class CourseVisualizer extends StatelessWidget {
   const CourseVisualizer({
@@ -10,7 +11,7 @@ class CourseVisualizer extends StatelessWidget {
 
   final AppState appState;
   final TextStyle textStyle;
-  final List<String> courses;
+  final List<CourseSection> courses;
 
   @override
   Widget build(BuildContext context) {
@@ -31,42 +32,42 @@ class CourseVisualizer extends StatelessWidget {
               color: Colors.black,
             ),
             ScheduleColumn(
-              name: 'Monday',
+              day: Day.monday,
               courses: courses,
             ),
             VerticalDivider(
               color: Colors.black,
             ),
             ScheduleColumn(
-              name: 'Tuesday',
+              day: Day.tuesday,
               courses: courses,
             ),
             VerticalDivider(
               color: Colors.black,
             ),
             ScheduleColumn(
-              name: 'Wednesday',
+              day: Day.wednesday,
               courses: courses,
             ),
             VerticalDivider(
               color: Colors.black,
             ),
             ScheduleColumn(
-              name: 'Thursday',
+              day: Day.thursday,
               courses: courses,
             ),
             VerticalDivider(
               color: Colors.black,
             ),
             ScheduleColumn(
-              name: 'Friday',
+              day: Day.friday,
               courses: courses,
             ),
             VerticalDivider(
               color: Colors.black,
             ),
             ScheduleColumn(
-              name: 'Saturday',
+              day: Day.saturday,
               courses: courses,
             ),
           ],
@@ -92,103 +93,13 @@ class TimeColumn extends StatelessWidget {
         Expanded(
           child: Spacer(),
         ),
-        Expanded(
-          child: Row(children: [
-            Text("7:00 AM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-            child: Row(
-          children: [
-            Text("8:00 AM"),
-            Container(width: width, height: height, color: Colors.black),
-          ],
-        )),
-        Expanded(
-          child: Row(children: [
-            Text("9:00 AM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("10:00 AM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("11:00 AM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("12:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("1:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("2:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("3:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("4:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("5:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("6:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("7:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("8:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("9:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
-        Expanded(
-          child: Row(children: [
-            Text("10:00 PM"),
-            Container(width: width, height: height, color: Colors.black),
-          ]),
-        ),
+        for (int i = 0; i < 16; ++i)
+          Expanded(
+            child: Row(children: [
+              Text("${(7+i)%13 + (i >= 6 ? 1 : 0)}:00 ${i >= 5 ? 'PM' : 'AM'}"),
+              Container(width: width, height: height, color: Colors.black),
+            ]),
+          ),
         Spacer(),
         Row(
           children: [
@@ -204,21 +115,39 @@ class TimeColumn extends StatelessWidget {
 class ScheduleColumn extends StatelessWidget {
   const ScheduleColumn({
     super.key,
-    required this.name,
+    required this.day,
     required this.courses,
   });
 
-  final String name;
-  final List<String> courses;
+  final Day day;
+  final List<CourseSection> courses;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (var course in courses)
-          if (course == name) Text(course),
+        SizedBox(height: 65),
+        Stack(
+          fit: StackFit.loose,
+          children: [
+            Container(
+              width: 200,
+              height: 700,
+            ),
+            for (var course in courses)
+              if (course.days!.value & day.value == day.value)
+                Positioned(
+                  top: course.startTime! * 0.715,
+                  child: Container(
+                      height: (course.endTime! - course.startTime!) * 0.715,
+                      width: 200,
+                      color: Color.fromARGB(100, 110, 166, 176),
+                      child: Text(course.name!)),
+                ),
+          ],
+        ),
         Spacer(),
-        Text(name),
+        Text(day.toString()),
       ],
     );
   }
