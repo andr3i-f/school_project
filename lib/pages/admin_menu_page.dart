@@ -22,7 +22,8 @@ class AdminMenuPage extends StatelessWidget {
               height: 64,
             ),
             //User-type buttons
-            Row( //Top row
+            Row(
+              //Top row
               children: [
                 GridButton(
                   path: 'assets/images/adminIcon.png',
@@ -32,8 +33,8 @@ class AdminMenuPage extends StatelessWidget {
                 SizedBox(width: 10),
                 GridButton(
                   path: 'assets/images/adminIcon.png',
-                  label: 'Placeholder2',
-                  fn: () => {print('Placeholder pressed')},
+                  label: 'Course Builder',
+                  fn: () => {appState.changePage('CourseBuilder')},
                 ),
                 SizedBox(width: 10),
                 GridButton(
@@ -44,7 +45,8 @@ class AdminMenuPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            Row( // Bottom row
+            Row(
+              // Bottom row
               children: [
                 GridButton(
                   path: 'assets/images/adminIcon.png',
