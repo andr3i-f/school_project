@@ -26,7 +26,27 @@ class CourseBuilderPage extends StatelessWidget {
                     child: Text("Back")),
               ],
             ),
-            Column(),
+            Column(
+              children: [
+                Container(
+                    width: 200,
+                    height: 100,
+                    color: Colors.blue[50],
+                    child: Column(
+                      children: [
+                        Text("Currently Selected Course"),
+                        DropdownMenu<String>(
+                          dropdownMenuEntries: [
+                            DropdownMenuEntry(
+                                value: "New Entry", label: "New Entry"),
+                            DropdownMenuEntry(
+                                value: "Second Entry", label: "Second Entry"),
+                          ],
+                        )
+                      ],
+                    ))
+              ],
+            ),
             Column(),
           ],
         ),
