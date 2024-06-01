@@ -24,15 +24,23 @@ class CourseBuilderPage extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () => appState.changePage('AdminMenu'),
-                    child: Text("Back")),
+                    child: Text("<< Back",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20))),
               ],
             ),
+            Spacer(),
             Column(
               children: [
+                Text("Course Builder",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 40)),
+                SizedBox(height: 25),
                 CourseBuilderInputForm(appState: appState),
+                Spacer(),
               ],
             ),
-            Column(),
+            Spacer(),
           ],
         ),
       );
