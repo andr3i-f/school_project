@@ -36,7 +36,7 @@ class CourseBuilderPage extends StatelessWidget {
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 40)),
                 SizedBox(height: 25),
-                CourseBuilderInputForm(appState: appState),
+                CourseBuilderForm(appState: appState),
                 Spacer(),
               ],
             ),
