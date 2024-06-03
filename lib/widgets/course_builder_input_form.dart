@@ -40,6 +40,28 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
   var courseMinimumGradeController = new TextEditingController();
   var requisiteController = new TextEditingController();
 
+  void deleteCourse() {
+    var index = 0;
+    if (currentCourse.identifier == "New Course") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Can't delete 'New Course'!")),
+      );
+    } else {
+      for (var course in courses) {
+        if ("${course.identifier} ${course.number}" ==
+            "${courseIdentifierController.text} ${courseNumberController.text}") {
+          break;
+        }
+        index += 1;
+      }
+      courses.removeAt(index);
+      currentCourse = courses[0];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Deleted course!")),
+      );
+    }
+  }
+
   void findCourse() {
     bool found = false;
     int index = 0;
@@ -217,13 +239,14 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
               Row(
                 children: [
                   Expanded(
-                      child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[400],
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[400],
+                      ),
+                      onPressed: findCourse,
+                      child: Text("Create New Course"),
                     ),
-                    child: Text("Create New Course"),
-                    onPressed: findCourse,
-                  ))
+                  )
                 ],
               ),
               SizedBox(height: 10),
@@ -231,11 +254,12 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red[400],
-                        ),
-                        child: Text("Delete Course"),
-                        onPressed: () => {print("hi")}),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red[400],
+                      ),
+                      onPressed: deleteCourse,
+                      child: Text("Delete Course"),
+                    ),
                   ),
                 ],
               )
