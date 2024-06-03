@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:recourse/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recourse/widgets/course_builder_input_form.dart';
+import '../classes/course.dart';
 import '../widgets/widgets.dart';
 import 'style.dart';
 

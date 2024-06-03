@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recourse/main.dart';
 import 'package:recourse/course_classes.dart';
+import '../classes/course.dart';
+import '../classes/requisites.dart';
 
 class CourseBuilderForm extends StatefulWidget {
   const CourseBuilderForm({
@@ -18,19 +20,59 @@ class CourseBuilderForm extends StatefulWidget {
 
 class CourseBuilderFormState extends State<CourseBuilderForm> {
   final _formKey = GlobalKey<FormState>();
-  String? currentCourse = "New Course";
-  List<String> courses = <String>[
-    "New Course",
-    "CST 116",
-    "CST 126",
-    "CST 136"
+  List<Course> courses = <Course>[
+    Course("New Course", "", "New Course", ""),
+    Course(
+        "CST", "116", "Intro to C++", "Students will learn the basics of C++"),
+    Course("CST", "126", "Functional programming with C++",
+        "Students will learn functional programming principles with C++"),
+    Course("CST", "136", "OOP with C++",
+        "Students will learn OOP principles with C++"),
   ];
+
+  late Course currentCourse = courses[0];
+  late Course reqCourse;
 
   var courseIdentifierController = new TextEditingController();
   var courseNumberController = new TextEditingController();
   var courseNameController = new TextEditingController();
   var courseDescriptionController = new TextEditingController();
   var courseMinimumGradeController = new TextEditingController();
+
+  void findCourse() {
+    bool found = false;
+    int index = 0;
+    if (_formKey.currentState!.validate()) {
+      for (var course in courses) {
+        if ("${course.identifier} ${course.number}" ==
+            "${courseIdentifierController.text} ${courseNumberController.text}") {
+          found = true;
+          break;
+        }
+        index += 1;
+      }
+
+      if (found) {
+        courses[index] = Course(
+            courseIdentifierController.text,
+            courseNumberController.text,
+            courseNameController.text,
+            courseDescriptionController.text);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Edited course!")),
+        );
+      } else {
+        courses.add(Course(
+            courseIdentifierController.text,
+            courseNumberController.text,
+            courseNameController.text,
+            courseDescriptionController.text));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Added course!")),
+        );
+      }
+    }
+  }
 
   @override
   build(BuildContext context) {
@@ -44,20 +86,22 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
               Column(
                 children: [
                   Text("Currently Selected Course"),
-                  DropdownMenu<String>(
+                  DropdownMenu<Course>(
                     initialSelection: currentCourse,
-                    dropdownMenuEntries: courses.map((String course) {
-                      return DropdownMenuEntry<String>(
-                          value: course, label: course);
+                    dropdownMenuEntries: courses.map((Course course) {
+                      return DropdownMenuEntry<Course>(
+                          value: course,
+                          label: "${course.identifier} ${course.number}");
                     }).toList(),
-                    onSelected: (String? course) {
+                    onSelected: (Course? course) {
                       setState(() {
-                        currentCourse = course;
-                        if (course != "New Course") {
-                          courseIdentifierController.text = course!;
-                          courseNumberController.text = course;
-                          courseNameController.text = course;
-                          courseDescriptionController.text = course;
+                        currentCourse = course!;
+                        if (course.name != "New Course") {
+                          courseIdentifierController.text = course.identifier!;
+                          courseNumberController.text = course.number!;
+                          courseNameController.text = course.name!;
+                          courseDescriptionController.text =
+                              course.description!;
                         } else {
                           courseIdentifierController.text = "";
                           courseNumberController.text = "";
@@ -65,7 +109,6 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                           courseDescriptionController.text = "";
                         }
                       });
-                      print(currentCourse);
                     },
                   ),
                 ],
@@ -170,21 +213,13 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
               Row(
                 children: [
                   Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green[400],
-                        ),
-                        child: Text("Create New Course"),
-                        onPressed: () => {
-                              if (_formKey.currentState!.validate())
-                                {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text("Added course!")),
-                                  )
-                                }
-                            }),
-                  ),
+                      child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[400],
+                    ),
+                    child: Text("Create New Course"),
+                    onPressed: findCourse,
+                  ))
                 ],
               ),
               SizedBox(height: 10),
@@ -213,13 +248,20 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                 Column(
                   children: [
                     Text("Add prerequisites / corequisites"),
-                    DropdownMenu<String>(
-                      dropdownMenuEntries: [
-                        DropdownMenuEntry(
-                            value: "Third Entry", label: "Third Entry"),
-                        DropdownMenuEntry(
-                            value: "Fourth Entry", label: "Fourth Entry"),
-                      ],
+                    DropdownMenu<Course>(
+                      dropdownMenuEntries: courses
+                          .where((Course course) =>
+                              course.identifier != "New Course")
+                          .map((Course course) {
+                        return DropdownMenuEntry<Course>(
+                            value: course,
+                            label: "${course.identifier} ${course.number}");
+                      }).toList(),
+                      onSelected: (Course? course) {
+                        setState(() {
+                          reqCourse = course!;
+                        });
+                      },
                     ),
                     SizedBox(
                       height: 10,
@@ -228,9 +270,11 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                       width: 200,
                       height: 60,
                       child: TextFormField(
+                        controller: courseMinimumGradeController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: "Minimum Grade",
+                          helperText: "Optional",
                         ),
                       ),
                     ),
@@ -243,7 +287,30 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green[400]),
-                            onPressed: () => {print("add button")},
+                            onPressed: () => {
+                                  if (currentCourse.identifier != "New Course")
+                                    {
+                                      if (courseMinimumGradeController.text ==
+                                          "")
+                                        {
+                                          currentCourse.coreqs.add(Requisite(
+                                            reqCourse.identifier,
+                                            reqCourse.number,
+                                            0,
+                                          ))
+                                        }
+                                      else
+                                        {
+                                          currentCourse.coreqs.add(Requisite(
+                                            reqCourse.identifier,
+                                            reqCourse.number,
+                                            int.parse(
+                                                courseMinimumGradeController
+                                                    .text),
+                                          ))
+                                        }
+                                    }
+                                },
                             child: Text("Add Coreq")),
                         SizedBox(
                           width: 10,
@@ -251,7 +318,30 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green[400]),
-                            onPressed: () => {print("add button")},
+                            onPressed: () => {
+                                  if (currentCourse.identifier != "New Course")
+                                    {
+                                      if (courseMinimumGradeController.text ==
+                                          "")
+                                        {
+                                          currentCourse.prereqs.add(Requisite(
+                                            reqCourse.identifier,
+                                            reqCourse.number,
+                                            0,
+                                          ))
+                                        }
+                                      else
+                                        {
+                                          currentCourse.prereqs.add(Requisite(
+                                            reqCourse.identifier,
+                                            reqCourse.number,
+                                            int.parse(
+                                                courseMinimumGradeController
+                                                    .text),
+                                          ))
+                                        }
+                                    }
+                                },
                             child: Text("Add Prereq")),
                         Spacer(),
                       ],
@@ -270,6 +360,12 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                       color: Colors.red[50],
                       child: Column(children: [
                         Text("Corequisites"),
+                        for (var req in currentCourse.coreqs)
+                          if (req.minimumGrade == 0)
+                            Text("${req.identifier} ${req.number}")
+                          else
+                            Text(
+                                "${req.identifier} ${req.number} : ${req.minimumGrade}"),
                       ]),
                     ),
                     SizedBox(
@@ -282,6 +378,12 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                       child: Column(
                         children: [
                           Text("Prerequisites"),
+                          for (var req in currentCourse.prereqs)
+                            if (req.minimumGrade == 0)
+                              Text("${req.identifier} ${req.number}")
+                            else
+                              Text(
+                                  "${req.identifier} ${req.number} : ${req.minimumGrade}"),
                         ],
                       ),
                     ),
