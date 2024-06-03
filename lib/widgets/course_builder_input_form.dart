@@ -5,7 +5,7 @@ import '../classes/course.dart';
 import '../classes/requisites.dart';
 
 class CourseBuilderForm extends StatefulWidget {
-  const CourseBuilderForm({
+  CourseBuilderForm({
     super.key,
     required this.appState,
   });
@@ -38,6 +38,7 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
   var courseNameController = new TextEditingController();
   var courseDescriptionController = new TextEditingController();
   var courseMinimumGradeController = new TextEditingController();
+  var requisiteController = new TextEditingController();
 
   void findCourse() {
     bool found = false;
@@ -59,7 +60,7 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
             courseNameController.text,
             courseDescriptionController.text);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Edited course!")),
+          SnackBar(content: Text("Edited course!")),
         );
       } else {
         courses.add(Course(
@@ -68,7 +69,7 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
             courseNameController.text,
             courseDescriptionController.text));
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Added course!")),
+          SnackBar(content: Text("Added course!")),
         );
       }
     }
@@ -102,11 +103,14 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                           courseNameController.text = course.name!;
                           courseDescriptionController.text =
                               course.description!;
+                          requisiteController.clear();
                         } else {
                           courseIdentifierController.text = "";
                           courseNumberController.text = "";
                           courseNameController.text = "";
                           courseDescriptionController.text = "";
+                          courseMinimumGradeController.text = "";
+                          requisiteController.clear();
                         }
                       });
                     },
@@ -249,6 +253,10 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                   children: [
                     Text("Add prerequisites / corequisites"),
                     DropdownMenu<Course>(
+                      controller: requisiteController,
+                      enabled: currentCourse.identifier == "New Course"
+                          ? false
+                          : true,
                       dropdownMenuEntries: courses
                           .where((Course course) =>
                               course.identifier != "New Course")
