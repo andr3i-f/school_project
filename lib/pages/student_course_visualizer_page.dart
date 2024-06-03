@@ -29,9 +29,11 @@ class StudentCourseVisualizerPage extends StatelessWidget {
             child: CourseVisualizer(
               appState: appState,
               textStyle: textStyle,
-              courses: [CourseSection('CST231', 'GUI Programming', 0, 120, Day.monday),
-              CourseSection('PHYS221', 'Physics I', 60, 240, Day.monday),
-              CourseSection('CST240', 'Linux', 540, 760, Day.monday)], // testing
+              courses: [
+                CourseSection('CST231', 'GUI Programming', 0, 120, Day.monday),
+                CourseSection('PHYS221', 'Physics I', 60, 240, Day.monday),
+                CourseSection('CST240', 'Linux', 540, 760, Day.monday)
+              ], // testing
             ),
           ),
         ],
