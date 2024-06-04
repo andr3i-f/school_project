@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recourse/main.dart';
-import 'package:recourse/course_classes.dart';
+import 'package:recourse/classes/course_section.dart';
 import '../classes/course.dart';
 import '../classes/requisites.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recourse/main.dart';
-import 'package:recourse/course_classes.dart';
+import 'package:recourse/classes/course_section.dart';
 
 class CourseVisualizer extends StatelessWidget {
   const CourseVisualizer({
@@ -96,7 +96,8 @@ class TimeColumn extends StatelessWidget {
         for (int i = 0; i < 16; ++i)
           Expanded(
             child: Row(children: [
-              Text("${(7+i)%13 + (i >= 6 ? 1 : 0)}:00 ${i >= 5 ? 'PM' : 'AM'}"),
+              Text(
+                  "${(7 + i) % 13 + (i >= 6 ? 1 : 0)}:00 ${i >= 5 ? 'PM' : 'AM'}"),
               Container(width: width, height: height, color: Colors.black),
             ]),
           ),
@@ -135,7 +136,7 @@ class ScheduleColumn extends StatelessWidget {
               height: 700,
             ),
             for (var course in courses)
-              if (course.days!.value & day.value == day.value)
+              if (course.days!.contains(day))
                 Positioned(
                   top: course.startTime! * 0.715,
                   child: Container(

@@ -4,7 +4,7 @@ import 'package:recourse/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/widgets.dart';
-import 'package:recourse/course_classes.dart';
+import 'package:recourse/classes/course_section.dart';
 
 class StudentCourseVisualizerPage extends StatelessWidget {
   @override
@@ -30,9 +30,12 @@ class StudentCourseVisualizerPage extends StatelessWidget {
               appState: appState,
               textStyle: textStyle,
               courses: [
-                CourseSection('CST231', 'GUI Programming', 0, 120, Day.monday),
-                CourseSection('PHYS221', 'Physics I', 60, 240, Day.monday),
-                CourseSection('CST240', 'Linux', 540, 760, Day.monday)
+                CourseSection('CST231', 'GUI Programming', 0, 120, {Day.monday},
+                    "Fall", "Bob Joe"),
+                CourseSection('PHYS221', 'Physics I', 60, 240, {Day.monday},
+                    "Fall", "Joe Bob"),
+                CourseSection('CST240', 'Linux', 540, 760, {Day.monday}, "Fall",
+                    "Billy Bob")
               ], // testing
             ),
           ),

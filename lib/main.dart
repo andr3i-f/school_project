@@ -10,7 +10,7 @@ import 'package:recourse/pages/student_course_visualizer_page.dart';
 import 'package:recourse/pages/student_sign_in_page.dart';
 import 'package:recourse/pages/course_builder_page.dart';
 import 'package:recourse/pages/section_builder_page.dart';
-
+import 'classes/course_section.dart';
 import 'pages/pages.dart';
 import 'widgets/widgets.dart';
 import 'classes/course.dart';
@@ -49,6 +49,12 @@ class AppState extends ChangeNotifier {
         "Students will learn functional programming principles with C++"),
     Course("CST", "136", "OOP with C++",
         "Students will learn OOP principles with C++"),
+  ];
+  List<CourseSection> sections = <CourseSection>[
+    CourseSection(
+        "CST 116", "Intro to C++", 0, 120, {Day.monday}, "Fall", "Bob Joe"),
+    CourseSection("CST 126", "Functional programming with C++", 0, 120,
+        {Day.tuesday}, "Winter", "Bob Joe"),
   ];
 
   void changePage(String id) {
