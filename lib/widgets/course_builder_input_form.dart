@@ -14,23 +14,19 @@ class CourseBuilderForm extends StatefulWidget {
 
   @override
   CourseBuilderFormState createState() {
-    return CourseBuilderFormState();
+    return CourseBuilderFormState(appState: appState);
   }
 }
 
 class CourseBuilderFormState extends State<CourseBuilderForm> {
-  final _formKey = GlobalKey<FormState>();
-  List<Course> courses = <Course>[
-    Course("New Course", "", "New Course", ""),
-    Course(
-        "CST", "116", "Intro to C++", "Students will learn the basics of C++"),
-    Course("CST", "126", "Functional programming with C++",
-        "Students will learn functional programming principles with C++"),
-    Course("CST", "136", "OOP with C++",
-        "Students will learn OOP principles with C++"),
-  ];
+  CourseBuilderFormState({
+    required this.appState,
+  });
 
-  late Course currentCourse = courses[0];
+  final AppState appState;
+  final _formKey = GlobalKey<FormState>();
+
+  late Course currentCourse = appState.courses[0];
   late Course reqCourse;
 
   var courseIdentifierController = new TextEditingController();
@@ -41,6 +37,7 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
   var requisiteController = new TextEditingController();
 
   void deleteCourse() {
+    var courses = appState.courses;
     var index = 0;
     if (currentCourse.identifier == "New Course") {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -63,6 +60,7 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
   }
 
   void findCourse() {
+    var courses = appState.courses;
     bool found = false;
     int index = 0;
     if (_formKey.currentState!.validate()) {
@@ -99,6 +97,7 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
 
   @override
   build(BuildContext context) {
+    var courses = appState.courses;
     return Form(
         key: _formKey,
         child: Row(children: [

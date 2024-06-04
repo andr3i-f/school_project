@@ -39,8 +39,8 @@ class AdminMenuPage extends StatelessWidget {
                 SizedBox(width: 10),
                 GridButton(
                   path: 'assets/images/adminIcon.png',
-                  label: 'Placeholder3',
-                  fn: () => {print('Placeholder pressed')},
+                  label: 'Section Builder',
+                  fn: () => {appState.changePage('SectionBuilder')},
                 ),
               ],
             ),
