@@ -32,10 +32,10 @@ class StudentCourseVisualizerPage extends StatelessWidget {
               courses: [
                 CourseSection('CST231', 'GUI Programming', 0, 120, {Day.monday},
                     "Fall", "Bob Joe"),
-                CourseSection('PHYS221', 'Physics I', 60, 240, {Day.monday},
-                    "Fall", "Joe Bob"),
+                CourseSection('PHYS221', 'Physics I', 60, 240,
+                    {Day.tuesday, Day.thursday}, "Fall", "Joe Bob"),
                 CourseSection('CST240', 'Linux', 540, 760, {Day.monday}, "Fall",
-                    "Billy Bob")
+                    "Billy Bob"),
               ], // testing
             ),
           ),

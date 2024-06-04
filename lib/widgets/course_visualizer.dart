@@ -148,7 +148,8 @@ class ScheduleColumn extends StatelessWidget {
           ],
         ),
         Spacer(),
-        Text(day.toString()),
+        Text(
+            "${day.toString().substring(4, 5).toUpperCase()}${day.toString().substring(5)}"),
       ],
     );
   }
