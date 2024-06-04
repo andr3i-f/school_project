@@ -11,12 +11,15 @@ enum Day with EnumFlag {
 }
 
 class CourseSection {
-  CourseSection(this.id, this.name, this.startTime, this.endTime, this.days);
+  CourseSection(this.id, this.name, this.startTime, this.endTime, this.days,
+      this.term, this.instructor);
 
   String? id;
   String? name;
+  String? term;
+  String? instructor;
   // Minutes normalized at 0 for 7AM.
   double? startTime;
   double? endTime;
-  Day? days;
+  Set<Day>? days;
 }

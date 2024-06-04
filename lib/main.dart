@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recourse/pages/course_builder_page.dart';
+import 'package:recourse/pages/section_builder_page.dart';
 import 'package:recourse/pages/student_course_visualizer_page.dart';
 import 'package:recourse/pages/student_sign_in_page.dart';
 import 'package:recourse/pages/course_builder_page.dart';
-
+import 'package:recourse/pages/section_builder_page.dart';
+import 'classes/course_section.dart';
 import 'pages/pages.dart';
 import 'widgets/widgets.dart';
+import 'classes/course.dart';
 
 void main() {
   runApp(ReCourse());
@@ -38,6 +41,27 @@ class ReCourse extends StatelessWidget {
 
 class AppState extends ChangeNotifier {
   String pageId = 'Landing';
+  List<Course> courses = <Course>[
+    Course("New Course", "", "New Course", ""),
+    Course(
+        "CST", "116", "Intro to C++", "Students will learn the basics of C++"),
+    Course("CST", "126", "Functional programming with C++",
+        "Students will learn functional programming principles with C++"),
+    Course("CST", "136", "OOP with C++",
+        "Students will learn OOP principles with C++"),
+  ];
+  List<CourseSection> sections = <CourseSection>[
+    CourseSection(
+        "CST 116", "Intro to C++", 0, 120, {Day.monday}, "Fall", "Bob Joe"),
+    CourseSection("CST 126", "Functional programming with C++", 0, 120,
+        {Day.tuesday}, "Winter", "Bob Joe"),
+    CourseSection(
+        'CST231', 'GUI Programming', 0, 120, {Day.monday}, "Fall", "Bob Joe"),
+    CourseSection('PHYS221', 'Physics I', 60, 240, {Day.tuesday, Day.thursday},
+        "Fall", "Joe Bob"),
+    CourseSection(
+        'CST240', 'Linux', 540, 760, {Day.monday}, "Fall", "Billy Bob"),
+  ];
 
   void changePage(String id) {
     pageId = id;
@@ -78,6 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 'CourseBuilder':
         page = CourseBuilderPage();
+        break;
+      case 'SectionBuilder':
+        page = SectionBuilderPage();
         break;
       default:
         throw UnimplementedError('no widget for $currentPageId');
