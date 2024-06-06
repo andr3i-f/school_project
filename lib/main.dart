@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recourse/pages/course_builder_page.dart';
+import 'package:recourse/pages/course_selector_page.dart';
 import 'package:recourse/pages/curriculum_builder_page.dart';
 import 'package:recourse/pages/section_builder_page.dart';
 import 'package:recourse/pages/student_course_visualizer_page.dart';
@@ -59,11 +60,11 @@ class AppState extends ChangeNotifier {
     CourseSection("CST 126", "Functional programming with C++", 0, 120,
         {Day.tuesday}, "Winter", "Bob Joe"),
     CourseSection(
-        'CST231', 'GUI Programming', 0, 120, {Day.monday}, "Fall", "Bob Joe"),
-    CourseSection('PHYS221', 'Physics I', 60, 240, {Day.tuesday, Day.thursday},
+        'CST 231', 'GUI Programming', 0, 120, {Day.monday}, "Fall", "Bob Joe"),
+    CourseSection('PHY 221', 'Physics I', 60, 240, {Day.tuesday, Day.thursday},
         "Fall", "Joe Bob"),
     CourseSection(
-        'CST240', 'Linux', 540, 760, {Day.monday}, "Fall", "Billy Bob"),
+        'CST 240', 'Linux', 540, 760, {Day.monday}, "Fall", "Billy Bob"),
   ];
   List<Curriculum> curriculumns = <Curriculum>[
     Curriculum("New Curriculum", [], []),
@@ -75,6 +76,7 @@ class AppState extends ChangeNotifier {
     ], []),
     Curriculum("Physics", [], []),
   ];
+  List<CourseSection> studentChosenSections = <CourseSection>[];
 
   void changePage(String id) {
     pageId = id;
@@ -121,6 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 'CurriculumBuilder':
         page = CurriculumBuilderPage();
+        break;
+      case 'CourseSelector':
+        page = CourseSelectorPage();
+        break;
       default:
         throw UnimplementedError('no widget for $currentPageId');
     }

@@ -105,6 +105,10 @@ class SectionBuilderFormState extends State<SectionBuilderForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Removed section!")),
       );
+
+      setState(() {
+        print('hi');
+      });
     }
   }
 
