@@ -26,7 +26,12 @@ class CourseSelector extends State<CourseSelectorState> {
 
   final AppState appState;
 
-  @override
+  void sync() {
+    setState(() {
+      print('hi');
+    });
+  }
+
   build(BuildContext context) {
     var sections = appState.sections;
     var studentSections = appState.studentChosenSections;
@@ -51,16 +56,12 @@ class CourseSelector extends State<CourseSelectorState> {
                   Row(
                     children: [
                       for (int i = 0; i < studentSections.length; ++i)
-                        TextButton(
-                            onPressed: () {
-                              setState(() {
-                                studentSections.removeAt(i);
-                              });
-                            },
-                            child: CourseSectionCard(
-                              appState: appState,
-                              index: i,
-                            ))
+                        CourseSectionCard(
+                          appState: appState,
+                          index: i,
+                          isSelected: true,
+                          courseSelector: this,
+                        ),
                     ],
                   ),
                 ],
@@ -110,31 +111,12 @@ class CourseSelector extends State<CourseSelectorState> {
                                 children: [
                                   for (int x = 0; x < 4; ++x)
                                     (x + (i * 4)) < sections.length
-                                        ? TextButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                studentSections.add(
-                                                    CourseSection(
-                                                        sections[(x + (i * 4))]
-                                                            .id,
-                                                        sections[(x + (i * 4))]
-                                                            .name,
-                                                        sections[(x + (i * 4))]
-                                                            .startTime,
-                                                        sections[(x + (i * 4))]
-                                                            .endTime,
-                                                        sections[(x + (i * 4))]
-                                                            .days,
-                                                        sections[(x + (i * 4))]
-                                                            .term,
-                                                        sections[(x + (i * 4))]
-                                                            .instructor));
-                                              });
-                                            },
-                                            child: CourseSectionCard(
-                                              appState: appState,
-                                              index: (x + (i * 4)),
-                                            ))
+                                        ? CourseSectionCard(
+                                            appState: appState,
+                                            index: (x + (i * 4)),
+                                            isSelected: false,
+                                            courseSelector: this,
+                                          )
                                         : Container(),
                                 ],
                               ),
@@ -151,31 +133,79 @@ class CourseSectionCard extends StatelessWidget {
   CourseSectionCard({
     required this.appState,
     required this.index,
+    required this.isSelected,
+    required this.courseSelector,
   });
+
+  final CourseSelector courseSelector;
 
   final AppState appState;
   final int index;
+  bool isSelected;
+
+  void pressed() {
+    var sections = appState.sections;
+    var studentSections = appState.studentChosenSections;
+
+    CourseSection cs = CourseSection(
+        sections[index].id,
+        sections[index].name,
+        sections[index].startTime,
+        sections[index].endTime,
+        sections[index].days,
+        sections[index].term,
+        sections[index].instructor);
+
+    print(cs.id);
+
+    if (isSelected == false) {
+      studentSections.add(CourseSection(
+          sections[index].id,
+          sections[index].name,
+          sections[index].startTime,
+          sections[index].endTime,
+          sections[index].days,
+          sections[index].term,
+          sections[index].instructor));
+    } else {
+      studentSections.removeAt(index);
+    }
+    courseSelector.sync();
+  }
+
   @override
   Widget build(BuildContext) {
     var sections = appState.sections;
+    var studentSections = appState.studentChosenSections;
 
-    return Container(
-      width: 180,
-      height: 180,
-      color: Colors.grey[300],
-      child: Column(
-        children: [
-          SizedBox(
-            height: 5,
-          ),
-          Text("Course", style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(
-            height: 5,
-          ),
-          Text("${sections[index].id}"),
-          Text("${sections[index].instructor}"),
-          Text("${sections[index].startTime} - ${sections[index].endTime}"),
-        ],
+    return TextButton(
+      onPressed: pressed,
+      child: Container(
+        width: 180,
+        height: 180,
+        color: Colors.grey[300],
+        child: Column(
+          children: [
+            SizedBox(
+              height: 5,
+            ),
+            Text("Course", style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(
+              height: 5,
+            ),
+            isSelected == false
+                ? Text("${sections[index].id}")
+                : Text("${studentSections[index].id}"),
+            isSelected == false
+                ? Text("${sections[index].instructor}")
+                : Text("${studentSections[index].instructor}"),
+            isSelected == false
+                ? Text(
+                    "${sections[index].startTime} - ${sections[index].endTime}")
+                : Text(
+                    "${studentSections[index].startTime} - ${studentSections[index].endTime}"),
+          ],
+        ),
       ),
     );
   }
