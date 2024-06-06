@@ -33,14 +33,14 @@ class StudentMenuPage extends StatelessWidget {
                 SizedBox(width: 10),
                 GridButton(
                   path: 'assets/images/studentIcon.png',
-                  label: 'Schedule visualizer',
-                  fn: () => {appState.changePage('StudentCourseVisualizer')},
+                  label: 'Course Selector',
+                  fn: () => {appState.changePage('CourseSelector')},
                 ),
                 SizedBox(width: 10),
                 GridButton(
                   path: 'assets/images/studentIcon.png',
-                  label: 'Placeholder3',
-                  fn: () => {print('Placeholder pressed')},
+                  label: 'Schedule visualizer',
+                  fn: () => {appState.changePage('StudentCourseVisualizer')},
                 ),
               ],
             ),

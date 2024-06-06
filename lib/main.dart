@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recourse/pages/course_builder_page.dart';
+import 'package:recourse/pages/course_selector_page.dart';
 import 'package:recourse/pages/curriculum_builder_page.dart';
 import 'package:recourse/pages/section_builder_page.dart';
 import 'package:recourse/pages/student_course_visualizer_page.dart';
@@ -75,6 +76,7 @@ class AppState extends ChangeNotifier {
     ], []),
     Curriculum("Physics", [], []),
   ];
+  List<CourseSection> studentChosenSections = <CourseSection>[];
 
   void changePage(String id) {
     pageId = id;
@@ -121,6 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 'CurriculumBuilder':
         page = CurriculumBuilderPage();
+        break;
+      case 'CourseSelector':
+        page = CourseSelectorPage();
+        break;
       default:
         throw UnimplementedError('no widget for $currentPageId');
     }
