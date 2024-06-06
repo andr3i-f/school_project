@@ -53,18 +53,7 @@ class AdminMenuPage extends StatelessWidget {
                   label: 'Curriculum Builder',
                   fn: () => {appState.changePage('CurriculumBuilder')},
                 ),
-                SizedBox(width: 10),
-                GridButton(
-                  path: 'assets/images/adminIcon.png',
-                  label: 'Placeholder2',
-                  fn: () => {print('Placeholder pressed')},
-                ),
-                SizedBox(width: 10),
-                GridButton(
-                  path: 'assets/images/adminIcon.png',
-                  label: 'Placeholder3',
-                  fn: () => {print('Placeholder pressed')},
-                ),
+                Container(width: 530),
               ],
             )
           ]),

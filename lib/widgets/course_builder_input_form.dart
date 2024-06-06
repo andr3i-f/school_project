@@ -56,7 +56,17 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Deleted course!")),
       );
+      courseIdentifierController.text = "";
+      courseNumberController.text = "";
+      courseNameController.text = "";
+      courseDescriptionController.text = "";
+      courseMinimumGradeController.text = "";
+      requisiteController.clear();
     }
+
+    setState(() {
+      print('hi');
+    });
   }
 
   void findCourse() {
@@ -92,6 +102,10 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
           SnackBar(content: Text("Added course!")),
         );
       }
+
+      setState(() {
+        print('hi');
+      });
     }
   }
 
@@ -319,28 +333,26 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green[400]),
                             onPressed: () => {
-                                  if (currentCourse.identifier != "New Course")
-                                    {
+                                  setState(() {
+                                    if (currentCourse.identifier !=
+                                        "New Course") {
                                       if (courseMinimumGradeController.text ==
-                                          "")
-                                        {
-                                          currentCourse.coreqs.add(Requisite(
-                                            reqCourse.identifier,
-                                            reqCourse.number,
-                                            0,
-                                          ))
-                                        }
-                                      else
-                                        {
-                                          currentCourse.coreqs.add(Requisite(
-                                            reqCourse.identifier,
-                                            reqCourse.number,
-                                            int.parse(
-                                                courseMinimumGradeController
-                                                    .text),
-                                          ))
-                                        }
+                                          "") {
+                                        currentCourse.coreqs.add(Requisite(
+                                          reqCourse.identifier,
+                                          reqCourse.number,
+                                          0,
+                                        ));
+                                      } else {
+                                        currentCourse.coreqs.add(Requisite(
+                                          reqCourse.identifier,
+                                          reqCourse.number,
+                                          int.parse(courseMinimumGradeController
+                                              .text),
+                                        ));
+                                      }
                                     }
+                                  }),
                                 },
                             child: Text("Add Coreq")),
                         SizedBox(
@@ -350,28 +362,26 @@ class CourseBuilderFormState extends State<CourseBuilderForm> {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green[400]),
                             onPressed: () => {
-                                  if (currentCourse.identifier != "New Course")
-                                    {
+                                  setState(() {
+                                    if (currentCourse.identifier !=
+                                        "New Course") {
                                       if (courseMinimumGradeController.text ==
-                                          "")
-                                        {
-                                          currentCourse.prereqs.add(Requisite(
-                                            reqCourse.identifier,
-                                            reqCourse.number,
-                                            0,
-                                          ))
-                                        }
-                                      else
-                                        {
-                                          currentCourse.prereqs.add(Requisite(
-                                            reqCourse.identifier,
-                                            reqCourse.number,
-                                            int.parse(
-                                                courseMinimumGradeController
-                                                    .text),
-                                          ))
-                                        }
+                                          "") {
+                                        currentCourse.prereqs.add(Requisite(
+                                          reqCourse.identifier,
+                                          reqCourse.number,
+                                          0,
+                                        ));
+                                      } else {
+                                        currentCourse.prereqs.add(Requisite(
+                                          reqCourse.identifier,
+                                          reqCourse.number,
+                                          int.parse(courseMinimumGradeController
+                                              .text),
+                                        ));
+                                      }
                                     }
+                                  }),
                                 },
                             child: Text("Add Prereq")),
                         Spacer(),

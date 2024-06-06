@@ -60,11 +60,11 @@ class AppState extends ChangeNotifier {
     CourseSection("CST 126", "Functional programming with C++", 0, 120,
         {Day.tuesday}, "Winter", "Bob Joe"),
     CourseSection(
-        'CST231', 'GUI Programming', 0, 120, {Day.monday}, "Fall", "Bob Joe"),
-    CourseSection('PHYS221', 'Physics I', 60, 240, {Day.tuesday, Day.thursday},
+        'CST 231', 'GUI Programming', 0, 120, {Day.monday}, "Fall", "Bob Joe"),
+    CourseSection('PHY 221', 'Physics I', 60, 240, {Day.tuesday, Day.thursday},
         "Fall", "Joe Bob"),
     CourseSection(
-        'CST240', 'Linux', 540, 760, {Day.monday}, "Fall", "Billy Bob"),
+        'CST 240', 'Linux', 540, 760, {Day.monday}, "Fall", "Billy Bob"),
   ];
   List<Curriculum> curriculumns = <Curriculum>[
     Curriculum("New Curriculum", [], []),
