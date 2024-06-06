@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recourse/pages/course_builder_page.dart';
+import 'package:recourse/pages/curriculum_builder_page.dart';
 import 'package:recourse/pages/section_builder_page.dart';
 import 'package:recourse/pages/student_course_visualizer_page.dart';
 import 'package:recourse/pages/student_sign_in_page.dart';
@@ -14,6 +15,8 @@ import 'classes/course_section.dart';
 import 'pages/pages.dart';
 import 'widgets/widgets.dart';
 import 'classes/course.dart';
+import 'pages/course_builder_page.dart';
+import 'classes/curriculum.dart';
 
 void main() {
   runApp(ReCourse());
@@ -62,6 +65,16 @@ class AppState extends ChangeNotifier {
     CourseSection(
         'CST240', 'Linux', 540, 760, {Day.monday}, "Fall", "Billy Bob"),
   ];
+  List<Curriculum> curriculumns = <Curriculum>[
+    Curriculum("New Curriculum", [], []),
+    Curriculum("Software Engineering Technology", [
+      Course("CST", "116", "Intro to C++",
+          "Students will learn the basics of C++"),
+      Course("CST", "126", "Functional programming with C++",
+          "Students will learn functional programming principles with C++"),
+    ], []),
+    Curriculum("Physics", [], []),
+  ];
 
   void changePage(String id) {
     pageId = id;
@@ -106,6 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
       case 'SectionBuilder':
         page = SectionBuilderPage();
         break;
+      case 'CurriculumBuilder':
+        page = CurriculumBuilderPage();
       default:
         throw UnimplementedError('no widget for $currentPageId');
     }
